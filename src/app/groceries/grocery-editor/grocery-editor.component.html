@@ -1,0 +1,108 @@
+<div>
+    <ngb-alert [type]="'danger'" *ngIf="showFailureMsg" (close)="showFailureMsg=false">Some error occured. Please try again.</ngb-alert>
+ 
+    <button [routerLink]="['']" class="btn btn-light">
+        <fa-icon [icon]="backIcon"></fa-icon>  Back</button>
+    <div class="row">
+        <div class="col">
+            <h1>{{operation}}</h1>
+            <div class="text-right mb-3">
+                <button id="editBtn" *ngIf="mode==='view'" [routerLink]="['/edit',groceryId]" class="btn btn-dark">Edit
+                    Grocery</button>
+                <button id="deleteBtn" *ngIf="mode==='view' || mode==='edit'" (click)="delete()" class="btn btn-danger">Delete
+                    Grocery</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col offset-md-2">
+            <form id="form" [formGroup]="groceryForm" (ngSubmit)="submit()">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="name">Name</label>
+                    <div class="col-sm-6">
+                        <input [ngClass]="{'is-invalid':isValidField('name')}" type="text" class="form-control"
+                            id="name" formControlName="name">
+                        <div class="invalid-feedback">
+                            Name is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="desc">Description</label>
+                    <div class="col-sm-6">
+                        <input [ngClass]="{'is-invalid':isValidField('description')}" type="text" class="form-control"
+                            id="desc" formControlName="description">
+                        <div class="invalid-feedback">
+                            Description is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="price">Price</label>
+                    <div class="col-sm-6">
+                        <input [ngClass]="{'is-invalid':isValidField('unitPrice')}" type="number" class="form-control"
+                            id="prce" formControlName="unitPrice">
+                        <div class="invalid-feedback">
+                            Please enter a valid numeric price
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="quantity">Quantity</label>
+                    <div class="col-sm-6">
+                        <input [ngClass]="{'is-invalid':isValidField('quantity')}" type="number" class="form-control"
+                            id="quantity" formControlName="quantity">
+                        <div class="invalid-feedback">
+                            Please enter a valid numeric quantity
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="manuDate">Manufactured Date</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input ngbDatepicker #manuDate="ngbDatepicker"
+                                [ngClass]="{'is-invalid':isValidField('manufacturedDate')}" class="form-control"
+                                id="manuDate" formControlName="manufacturedDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="manuDate.toggle()"
+                                    type="button">
+                                    <fa-icon [icon]="calendarIcon"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a valid date
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="expDate">Expiry Date</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input ngbDatepicker #expDate="ngbDatepicker"
+                                [ngClass]="{'is-invalid':isValidField('expiryDate')}" class="form-control"
+                                id="expDate" formControlName="expiryDate">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="expDate.toggle()"
+                                    type="button">
+                                    <fa-icon [icon]="calendarIcon"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a valid date
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row" *ngIf="mode!=='view'">
+                    <div class="col-sm-8 text-right">
+                        <button [disabled]="groceryForm.status=='INVALID'" type="submit"
+                            class="btn btn-dark">{{operation}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

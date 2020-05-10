@@ -1,0 +1,11 @@
+<div>
+    <div class="row">
+        <div class="col">
+            <h1>Groceries</h1>
+            <div class="text-right mb-3">
+                <button [routerLink]="['/add']" class="btn btn-dark">Add Grocery</button>
+            </div>
+        </div>
+    </div>
+    <gm-grocery-list (selected)="grocerySelected($event)" [groceries]="groceries"></gm-grocery-list>
+</div>
